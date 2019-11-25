@@ -9,16 +9,35 @@ app.get("/", (req, res) => {
   res.send("Todo listo");
 });
 
+class Cliente {
+  constructor(id, { nombre, apellido, empresa, email }) {
+    this.id = id;
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.empresa = empresa;
+    this.email = email;
+  }
+}
+
+const clienteDB = {};
+
 // Resolver
 const root = {
   cliente: () => {
     return {
-      "id" : 10989321312,
-      "nombre" : "Ismael",
-      "apellido" : "Barrios",
-      "empresa" : "Udemy",
-      "email" : "ismael_br7@hotmail.com"
-    }
+      id: 10989321312,
+      nombre: "Ismael",
+      apellido: "Barrios",
+      empresa: "Udemy",
+      email: "ismael_br7@hotmail.com"
+    };
+  },
+  crearCliente: ({ input }) => {
+    const id = require("crypto")
+      .randomBytes(10)
+      .toString("hex");
+    clienteDB[id] = input;
+    return new Cliente(id, input);
   }
 };
 
