@@ -9,7 +9,7 @@ app.get("/", (req, res) => {
   res.send("Todo listo");
 });
 
-class Cliente {
+class Clientes {
   constructor(id, { nombre, apellido, empresa, email }) {
     this.id = id;
     this.nombre = nombre;
@@ -33,11 +33,14 @@ const root = {
     };
   },
   crearCliente: ({ input }) => {
+    // Cliente de crearCliente es el valor del tipo de
+    // objeto a devolver en este caso el typo es Cliente
     const id = require("crypto")
       .randomBytes(10)
       .toString("hex");
     clienteDB[id] = input;
-    return new Cliente(id, input);
+    console.log(clienteDB[id]);
+    return new Clientes(id, input);
   }
 };
 
