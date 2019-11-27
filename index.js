@@ -1,48 +1,19 @@
 import express from "express";
+
 // Graphql
 import graphqlHTTP from "express-graphql";
 import schema from "./schema";
+
+// Resolvers
+import resolvers from "./resolvers";
+
+const root = resolvers;
 
 const app = express();
 
 app.get("/", (req, res) => {
   res.send("Todo listo");
 });
-
-class Clientes {
-  constructor(id, { nombre, apellido, empresa, email }) {
-    this.id = id;
-    this.nombre = nombre;
-    this.apellido = apellido;
-    this.empresa = empresa;
-    this.email = email;
-  }
-}
-
-const clienteDB = {};
-
-// Resolver
-const root = {
-  cliente: () => {
-    return {
-      id: 10989321312,
-      nombre: "Ismael",
-      apellido: "Barrios",
-      empresa: "Udemy",
-      email: "ismael_br7@hotmail.com"
-    };
-  },
-  crearCliente: ({ input }) => {
-    // Cliente de crearCliente es el valor del tipo de
-    // objeto a devolver en este caso el typo es Cliente
-    const id = require("crypto")
-      .randomBytes(10)
-      .toString("hex");
-    clienteDB[id] = input;
-    console.log(clienteDB[id]);
-    return new Clientes(id, input);
-  }
-};
 
 app.use(
   "/graphql",
