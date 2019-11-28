@@ -13,17 +13,21 @@ class Cliente {
 
 const clienteDB = {};
 
-// Resolver
-const resolvers = {
-  getCliente: ({ id }) => {
-    return new Cliente(id, clienteDB[id]);
+// Resolvers
+export const resolvers = {
+  Query: {
+    getCliente: ({ id }) => {
+      return new Cliente(id, clienteDB[id]);
+    }
   },
-  crearCliente: ({ input }) => {
-    const id = require("crypto")
-      .randomBytes(10)
-      .toString("hex");
-    clienteDB[id] = input;
-    return new Cliente(id, input);
+  Mutation: {
+    crearCliente: ({ input }) => {
+      const id = require("crypto")
+        .randomBytes(10)
+        .toString("hex");
+      clienteDB[id] = input;
+      return new Cliente(id, input);
+    }
   }
 };
 
