@@ -5,8 +5,16 @@ import { rejects } from "assert";
 // Resolvers
 export const resolvers = {
   Query: {
-    getCliente: ({ id }) => {
-      return new Cliente(id, clienteDB[id]);
+    getClientes: (root, { limite }) => {
+      return Clientes.find({}).limit(limite);
+    },
+    getCliente: (root, { id }) => {
+      return new Promise((resolve, object) => {
+        Clientes.findById(id, (error, cliente) => {
+          if (error) rejects(error);
+          else resolve(cliente);
+        });
+      });
     }
   },
   Mutation: {
@@ -27,6 +35,28 @@ export const resolvers = {
         nuevoCliente.save(error => {
           if (error) rejects(error);
           else resolve(nuevoCliente);
+        });
+      });
+    },
+    actualizarCliente: (root, { input }) => {
+      return new Promise((resolve, object) => {
+        //new: true --> si el registro no existe y le estamos pasando un objeto, si no hay ninguno con el id, crea uno nuevo
+        Clientes.findOneAndUpdate(
+          { _id: input.id },
+          input,
+          { new: true },
+          (error, cliente) => {
+            if (error) rejects(error);
+            else resolve(cliente);
+          }
+        );
+      });
+    },
+    elimnarCliente: (root, { id }) => {
+      return new Promise((resolve, object) => {
+        Clientes.findOneAndRemove({ _id: id }, error => {
+          if (error) rejects(error);
+          else resolve("Se eliminó correctamente.");
         });
       });
     }

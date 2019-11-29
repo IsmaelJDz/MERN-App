@@ -16,6 +16,7 @@ type Pedido {
   precio: Int
 }
 type Query {
+  getClientes(limite: Int): [Cliente]
   getCliente(id: ID): Cliente
 }
 """
@@ -55,4 +56,6 @@ type Mutation {
   Te permite crear nuevos clientes
   """
   crearCliente(input: ClienteInput): Cliente
+  actualizarCliente(input: ClienteInput): Cliente
+  elimnarCliente(id: ID!): String
 }
