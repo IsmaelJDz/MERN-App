@@ -3,7 +3,8 @@ type Cliente {
   nombre: String
   apellido: String
   empresa: String
-  emails: [Email]
+  #emails: [Email]
+  email: String
   edad: Int
   tipo: TipoCliente
   pedidos: [Pedido]
@@ -42,7 +43,8 @@ input ClienteInput {
   nombre: String!
   apellido: String!
   empresa: String!
-  emails: [EmailIput]
+  #emails: [EmailIput]
+  email: String
   edad: Int!
   tipo: TipoCliente!
   pedidos: [PedidoInput]
